@@ -53,6 +53,18 @@ module.exports.searchUser =   function(req, res){
         console.log("skdhgkhgjkghjgjg");
         return redirect('/');
     }else{
+        User.findOne({email : req.body.searchUser})
+        .then((searchedUser)=>{
+            console.log(searchedUser)
+            return res.redirect(`/users/profile/${searchedUser._id}`);
+            
+        })
+        .catch((err)=>{
+            console.log(err);
+            req.flash("error", "User not found");
+            return res.redirect('/');
+      });
+
         User.findOne({email : req.body.searchUser}, async function(err, searchedUser){
             if(err){
                 console.log(err);return;

@@ -57,20 +57,39 @@ module.exports.createUser = function(req, res){
     if(req.body.password != req.body.confirm_password){
         return res.redirect('back');
     }
+    User.findOne({email : req.body.email})
+        .then((data)=>{
+            console.log(data)
+            if (!data) {
+                User.create(req.body) 
+                    .then(result => { 
+                        return res.redirect('/users/signin');
+                    })
+            }else {
+                req.flash("error", "User already exist");
+                return res.redirect('back');
+            }
 
-    User.findOne({email : req.body.email}, function(err, userPresent){
-        if(err){console.log('Error in creating user');return;}
-        if(!userPresent){
-            User.create(req.body, function(err, user){
-                if(err){console.log('Error in creating user');return;}
-               
-                return res.redirect('/users/signin');
-            });
-        }else{
-            req.flash("error", "User already exist");
-            return res.redirect('back');
-        }
-    });
+        })
+        .catch((err)=>{
+            if(err){console.log('Error in creating user');return;}
+            return res.redirect('/users/signin');
+        });
+    
+
+
+    // User.findOne({email : req.body.email}, function(err, userPresent){
+    //     if(err){console.log('Error in creating user');return;}
+    //     if(!userPresent){
+    //         User.create(req.body, function(err, user){
+    //             if(err){console.log('Error in creating user');return;}
+    //             return res.redirect('/users/signin');
+    //         });
+    //     }else{
+    //         req.flash("error", "User already exist");
+    //         return res.redirect('back');
+    //     }
+    // });
 
 }
 

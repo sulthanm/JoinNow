@@ -104,8 +104,6 @@
                <p ><b><%= profile_user.name %></b></p>
                <p><%= profile_user.email %></p>
                
-               
-               
                <% let present = false %>
             
                <% for(friend1 of locals.user.friends) { %>
@@ -135,11 +133,12 @@
             
             
          </div>
-         <% if(profile_user.friends.length != 0){ %>
+         
             <div id="friends-container3">
-            
+               <span><%= profile_user.friends.length %> <b>Friends</b></span>
+               <% if(profile_user.friends.length != 0){ %>
                <div id="friends3">
-                  <p id="friends-heading"><b> <%= profile_user.name %> <span>'s</span>  Friends - <%= profile_user.friends.length %></b></p>
+                  <!-- <p id="friends-heading"><b> <%= profile_user.name %> <span>'s</span>  Friends - <%= profile_user.friends.length %></b></p> -->
                 
                <div id="all-friends-div">
                   <% for(f of profile_user.friends){ %>
@@ -189,20 +188,13 @@
                                </div>
                                   
                            <% } %>
-       
-                   
-       
-                        
-                     
                     
                   <% } %>
                </div>
                </div>
-            
-             
-            
+               <% } %>
             </div>
-         <% } %>
+         
       </div>
       
       

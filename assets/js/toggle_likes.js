@@ -5,8 +5,6 @@ class ToggleLike{
         this.toggler = toggleElement;
         this.toggleLike();
     }
-
-
     toggleLike(){
         
         $(this.toggler).click(function(e){
@@ -17,7 +15,7 @@ class ToggleLike{
                 url: $(self).attr('href'),
             })
             .done(function(data) {
-                console.log("got here");
+                // console.log("got here");
                 // x.classList.toggle("fa-thumbs-down");
                 let likesCount = parseInt($(self).attr('data-likes'));
                 let div1 = document.getElementById(`${data.data.requestedTypeId}`);

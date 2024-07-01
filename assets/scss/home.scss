@@ -429,15 +429,12 @@ $button-active-blue: #1669F2;
     #friends{
         display: inline-block;
         margin-left: 50px;
-        border-left : 2px solid rgb(48, 82, 196);
+        border-left : 2px solid rgb(222, 222, 222);
         vertical-align: top;
-        // margin-top: 35px;
-        // margin-top: 5%;
-        // position: fixed;
         height: 80vh;
         width: 20%;
         overflow-y: scroll;
-       
+        background-color: white;
         
         #friends-list{
             // margin-top: -468px;
@@ -595,6 +592,10 @@ $button-active-blue: #1669F2;
                     
                     border-radius: 2px;
                     background-color: $white;
+                    .google-icon{
+                        height: 100%;
+                        width: 100%;
+                    }
                 }
                
                 .btn-text {

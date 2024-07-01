@@ -15,7 +15,4 @@ router.post('/search-user', home.searchUser );
 router.use('/users', require('./users'));
 
 router.use('/api', require('./api'));
-
-
-
 module.exports = router;

@@ -10,14 +10,11 @@ class ChatEngine{
         }
 
     }
-
-
     connectionHandler(){
         let self = this;
         console.log(self);
         this.socket.on('connect', function(){
             console.log('connection established using sockets...!');
-
 
             self.socket.emit('join_room', {
                 user_name: self.userName,
@@ -27,14 +24,12 @@ class ChatEngine{
             self.socket.on('user_joined', function(data){
                 console.log('a user joined!', data);
             })
-
-
         });
 
         // CHANGE :: send a message on clicking the send message button
         $('#send-message').click(function(){
             let msg = $('#chat-message-input').val();
-
+            console.log("sending");
             if (msg != ''){
                 self.socket.emit('send_message', {
                     message: msg,

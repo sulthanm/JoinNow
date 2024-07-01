@@ -8,9 +8,10 @@ passport.use(new LocalStrategy({
         passReqToCallback : true
     },
     function(req, email, password, done) {
-        User.findOne({ email : email }, function (err, userPresent) {
-            if (err) { return done(err); }
-            if (!userPresent ) {
+      User.findOne({ email : email })
+        .then((userPresent)=>{
+            console.log(userPresent);
+            if (!userPresent) {
               req.flash("success", "Incorrect Username/Password");
               return done(null, false, { message: 'Incorrect username.' });
             }
@@ -19,7 +20,25 @@ passport.use(new LocalStrategy({
               return done(null, false, { message: 'Incorrect password.' });
             }
             return done(null, userPresent);
+            
+        })
+        .catch((err)=>{
+            console.log(err);
+            return done(err);
       });
+      
+      //   User.findOne({ email : email }, function (err, userPresent) {
+      //       if (err) { return done(err); }
+      //       if (!userPresent ) {
+      //         req.flash("success", "Incorrect Username/Password");
+      //         return done(null, false, { message: 'Incorrect username.' });
+      //       }
+      //       if (password != userPresent.password) {
+      //         req.flash("success", "Incorrect Username/Password");
+      //         return done(null, false, { message: 'Incorrect password.' });
+      //       }
+      //       return done(null, userPresent);
+      // });
     }
   ));
 
@@ -28,9 +47,16 @@ passport.serializeUser(function(user, done) {
 });
   
 passport.deserializeUser(function(id, done) {
-  User.findById(id, function(err, user) {
-    done(err, user);
-  });
+  User.findById(id)
+    .then((user) => {
+      done(null, user);
+    })
+    .catch((err) => {
+      done(err);
+    })
+  // User.findById(id, function(err, user) {
+  //   done(err, user);
+  // });
 });
 
 passport.checkAuthentication = function(req,res, next){
@@ -49,7 +75,6 @@ passport.checkAuthentication = function(req,res, next){
 passport.setAuthenticatedUser = function (req, res, next) {
   if (req.isAuthenticated()) {
     res.locals.user = req.user;
-   
   }
   
   next();

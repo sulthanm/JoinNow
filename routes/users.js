@@ -37,7 +37,8 @@ router.get('/auth/google',passport.authenticate('google',{scope: ['profile', 'em
 router.get('/auth/google/callback',passport.authenticate(
     'google',
     {failureRedirect : '/users/signin'}),
-profile.createUserSession);
+    
+    profile.createUserSession);
 
 router.post('/toggle', post.likePost);
 

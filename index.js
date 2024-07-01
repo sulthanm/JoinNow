@@ -13,6 +13,7 @@ const passportGoogle = require('./config/passport-google-oauth2-strategy');
 const sassMiddleware = require('node-sass-middleware');
 
 const MongoStore = require('connect-mongo')(session);
+const mongoose = require('mongoose')
 const flash = require('connect-flash');
 const customMware = require('./config/middleware');
 
@@ -32,7 +33,6 @@ const portChatServer = 8621;
 chatServer.listen(portChatServer);
 console.log("Chat server is listening on port",portChatServer);
 
-
 if(env.name=='development'){
     app.use(sassMiddleware({
         src: './assets/scss',
@@ -44,9 +44,7 @@ if(env.name=='development'){
 }
 
 app.use(express.urlencoded({ extended: true }));
-// console.log("hapyy");
 app.use(cookie());
-
 
 //make the uplads path available to user
 app.use('/uploads', express.static(__dirname + '/uploads'));
@@ -68,23 +66,13 @@ app.set("views" , "./views");
 // mongo store is used to store the session cookie in the db
 app.use(session({
     name: 'joinow',
-    // TODO change the secret before deployment in production mode
     secret: 'blahsomething',
     saveUninitialized: false,
     resave: false,
     cookie: {
         maxAge: (2000 * 60 * 1000)
     },
-    store: new MongoStore(
-        {
-            mongooseConnection: db,
-            autoRemove: 'disabled'
-        
-        },
-        function(err){
-            console.log(err ||  'connect-mongodb setup ok');
-        }
-    )
+    store: new MongoStore({mongooseConnection : mongoose.connection})
 }));
 
 
@@ -95,10 +83,6 @@ app.use(passport.setAuthenticatedUser);
 
 app.use(flash());
 app.use(customMware.setFlash);
-
-
-   
-
 
 const routes = require('./routes/index');
 app.use('/', routes);

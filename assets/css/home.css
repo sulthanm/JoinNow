@@ -242,11 +242,12 @@
   #home-container #friends {
     display: inline-block;
     margin-left: 50px;
-    border-left: 2px solid #3052c4;
+    border-left: 2px solid #dedede;
     vertical-align: top;
     height: 80vh;
     width: 20%;
-    overflow-y: scroll; }
+    overflow-y: scroll;
+    background-color: white; }
     #home-container #friends #friends-list {
       margin-left: 20px;
       font-size: 20px;
@@ -351,6 +352,9 @@
           align-items: center;
           border-radius: 2px;
           background-color: #fff; }
+          #home-container #sign-in-container-home #google-container .google-btn .google-icon-wrapper .google-icon {
+            height: 100%;
+            width: 100%; }
         #home-container #sign-in-container-home #google-container .google-btn .btn-text {
           color: black;
           font-size: 14px;
